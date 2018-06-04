@@ -1,0 +1,30 @@
+{
+  "name": "arquitecturaweb-integration",
+  "version": "1.0.0",
+  "description": "application designed to integrate and comunicate 3 different messaging applications, each implemented in a different lenguage",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mferranti/arquitecturaweb-integration.git"
+  },
+  "keywords": [
+    "chat",
+    "integration"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mferranti/arquitecturaweb-integration/issues"
+  },
+  "homepage": "https://github.com/mferranti/arquitecturaweb-integration#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "expressjs": "^1.0.1",
+    "superagent": "^3.8.3"
+  }
+}
