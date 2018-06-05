@@ -9,7 +9,7 @@ let chatApps = new Map;
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json())
 
-app.get('/', (req, res) => res.send('Hola, como estas? áca podés integrar tu chat'))
+app.get('/', (req, res) => res.sendFile(`${__dirname}/README.md`))
 app.post('/integrate', (req, res) => {
   const { id, endpoint, port } = req.body;
   chatApps.set(id, { endpoint, port })
