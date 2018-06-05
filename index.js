@@ -6,7 +6,6 @@ const app = express()
 
 let chatApps = new Map;
 
-
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json())
 
@@ -14,23 +13,22 @@ app.get('/', (req, res) => res.send('Hola, como estas? áca podés integrar tu c
 app.post('/integrate', (req, res) => {
   const { id, endpoint, port } = req.body;
   chatApps.set(id, { endpoint, port })
-  console.log(chatApps);
   res.send({status: 200, msg: `App ${req.body.id} integrated successfully with endpoint: ${req.body.endpoint}`})
 })
 app.post('/send', async (req, res) => {
-  const { from, msg, attachment, chat, to } = req.body;
+  const { from, msg, to, attachment, sourceApp, targetApp } = req.body;
   // some validator for message?
   const message = {
     from,
     msg,
-    attachment,
-    chat,
     to,
+    attachment,
+    sourceApp,
+    targetApp,
   };
   chatApps.forEach((chatApp, key) => {
-    if (key !== chat) {
+    if (key !== sourceApp) {
       const { endpoint, port } = chatApp;
-      console.log(chatApp);
       superagent.post(chatApp.endpoint)
         .send(message)
         .set('accept', 'json')
@@ -42,7 +40,9 @@ app.post('/send', async (req, res) => {
 })
 
 app.post('/test', (req, res) => {
-  console.log('llego esto: ', req.body )
+  console.log('message arrived from: ', req.body )
   res.send({...req.body})
 })
-app.listen(2345, () => console.log('Example app listening on port 2345!'))
+
+const port = process.env.NODE_ENV === 'production' ? 80 : 2345
+app.listen(port, () => console.log(`Example app listening on port ${port}!`))
