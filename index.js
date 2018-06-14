@@ -18,13 +18,13 @@ function checkError(routeHandler) {
   }
 }
 
-let chatApps = {
-  grails:{
-    endpointPublic:"https://arq-chat.herokuapp.com/integrate/public",
-    endpointPrivate:"https://arq-chat.herokuapp.com/integrate/private",
-    endpointContacts:"https://arq-chat.herokuapp.com/show/users"
-  }
-}
+let chatApps = new Map([
+  ['grails', {
+    "endpointPublic":"https://arq-chat.herokuapp.com/integrate/public",
+    "endpointPrivate":"https://arq-chat.herokuapp.com/integrate/private",
+    "endpointContacts":"https://arq-chat.herokuapp.com/show/users"
+  }]
+])
 
 const sendMessage = async (message, endpoint) => superagent.post(endpoint)
   .send(message)
