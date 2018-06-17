@@ -31,6 +31,11 @@ let chatApps = new Map([
   }]
 ])
 
+let logMessages = [];
+logMessage = (message) => {
+  logMessages = [message, ...logMessages].splice(0, 100)
+}
+
 const sendMessage = async (message, endpoint) => superagent.post(endpoint)
   .send(message)
   .set('accept', 'json')
@@ -67,11 +72,13 @@ app.post('/public/send', checkError(async (req, res) => {
     attachment,
     sourceApp,
   };
+
   for ([key, chatApp] of chatApps) {
     if (key !== sourceApp) {
       await sendMessage(message, chatApp.endpointPublic)
     }
   }
+  logMessage(message)
   response(res, 200, { msg: 'Broadcast message sent succesfully' })
 }))
 app.post('/private/send', checkError(async (req, res) => {
@@ -85,6 +92,7 @@ app.post('/private/send', checkError(async (req, res) => {
     sourceApp,
   };
   await sendMessage(message, chatApps.get(targetApp).endpointPrivate)
+  logMessage(message)
   response(res, 200, { msg: 'Broadcast message sent succesfully' });
 }))
 app.get('/contacts', checkError(async (req, res) => {
@@ -100,6 +108,9 @@ app.get('/ctest', checkError((req, res) => {
     {id: '3', name: 'me'},
   ]
   response(res, 200, contacts)
+}))
+app.get('/log', checkError((req, res) => {
+  response(res, 200, logMessages)
 }))
 app.post('/test', checkError((req, res) => {
   console.log('message arrived from: ', req.body )
