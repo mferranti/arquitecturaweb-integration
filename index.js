@@ -23,6 +23,11 @@ let chatApps = new Map([
     "endpointPublic":"https://arq-chat.herokuapp.com/integrate/public",
     "endpointPrivate":"https://arq-chat.herokuapp.com/integrate/private",
     "endpointContacts":"https://arq-chat.herokuapp.com/show/users"
+  }],
+  ['AngularJSChatApp', {
+    "endpointPublic":"https://quiet-citadel-52217.herokuapp.com/publicChat",
+    "endpointPrivate":"https://quiet-citadel-52217.herokuapp.com/privateChat",
+    "endpointContacts":"https://quiet-citadel-52217.herokuapp.com/contacts"
   }]
 ])
 
