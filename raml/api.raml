@@ -1,0 +1,153 @@
+#%RAML 1.0
+title: WebChat Integrator
+baseUri: https://awebchat-integration.herokuapp.com/log
+mediaType: application/json
+types:
+  User:
+    type: object
+    properties:
+      id: string
+      name: string
+  App:
+    type: object
+    properties:
+      id: string
+      endpointPublic: string
+      endpointPrivate: string
+      endpointContacts: string
+  PrivateMessage:
+    type: object
+    properties:
+      from: User
+      msg: string
+      to: User
+      attachment?: object
+      sourceApp: string
+      targetApp: string
+  PublicMessage:
+    type: object
+    properties:
+      from: User
+      msg: string
+      to: null
+      attachment?: object
+      sourceApp: string
+      targetApp: null
+
+/apps:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              [
+                [
+                  "grails",
+                  {
+                    "endpointPublic": "https://arq-chat.herokuapp.com/integrate/public",
+                    "endpointPrivate": "https://arq-chat.herokuapp.com/integrate/private",
+                    "endpointContacts": "https://arq-chat.herokuapp.com/show/users"
+                  }
+                ],
+                [
+                  "AngularJSChatApp",
+                  {
+                    "endpointPublic": "https://quiet-citadel-52217.herokuapp.com/publicChat",
+                    "endpointPrivate": "https://quiet-citadel-52217.herokuapp.com/privateChat",
+                    "endpointContacts": "https://quiet-citadel-52217.herokuapp.com/contacts"
+                  }
+                ]
+              ]
+/integrate:
+  post:
+    responses:
+      200:
+        body:
+          application/json:
+            type: App
+/public/send:
+  post:
+    responses:
+      200:
+        body:
+          application/json:
+            type: PublicMessage
+/private/send:
+  post:
+    responses:
+      200:
+        body:
+          application/json:
+            type: PrivateMessage
+/contacts:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              [
+                {
+                  "id": "grails",
+                  "contacts": [
+                    {
+                      "id": 1,
+                      "name": "juan"
+                    },
+                    {
+                      "id": 2,
+                      "name": "alvaro"
+                    },
+                    {
+                      "id": 7,
+                      "name": "marcelo"
+                    }
+                  ]
+                },
+                {
+                  "id": "AngularJSChatApp",
+                  "contacts": [
+                    {
+                      "id": "LVn3h_ot9oFJtGxmAAAF",
+                      "name": "Hodor"
+                    }
+                  ]
+                }
+              ]
+/log:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              [
+                {
+                  "from": {
+                    "id": "idkfa",
+                    "name": "fulanito"
+                  },
+                  "msg": "hola",
+                  "attachment": null,
+                  "sourceApp": "Grails"
+                }
+              ]
+/logArrival:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              [
+                {
+                  "from": {
+                    "id": "idkfa",
+                    "name": "fulanito"
+                  },
+                  "msg": "hola",
+                  "attachment": null,
+                  "sourceApp": "Grails"
+                }
+              ]

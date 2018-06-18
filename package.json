@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
+    "build-doc": "raml2html raml/api.raml > doc/index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -25,6 +26,8 @@
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
     "expressjs": "^1.0.1",
+    "osprey": "^0.5.0",
+    "raml2html": "^7.1.0",
     "superagent": "^3.8.3"
   }
 }
