@@ -36,6 +36,11 @@ logMessage = (message) => {
   logMessages = [message, ...logMessages].splice(0, 100)
 }
 
+let logArrivalMessages = [];
+logArrivalMessage = (message) => {
+  logArrivalMessages = [message, ...logArrivalMessages].splice(0, 100)
+}
+
 const sendMessage = async (message, endpoint) => superagent.post(endpoint)
   .send(message)
   .set('accept', 'json')
@@ -72,6 +77,8 @@ app.post('/public/send', checkError(async (req, res) => {
     attachment,
     sourceApp,
   };
+  
+  logArrivalMessage(message)
 
   for ([key, chatApp] of chatApps) {
     if (key !== sourceApp) {
@@ -91,6 +98,8 @@ app.post('/private/send', checkError(async (req, res) => {
     attachment,
     sourceApp,
   };
+  
+  logArrivalMessage(message)
   await sendMessage(message, chatApps.get(targetApp).endpointPrivate)
   logMessage(message)
   response(res, 200, { msg: 'Broadcast message sent succesfully' });
@@ -111,6 +120,10 @@ app.get('/ctest', checkError((req, res) => {
 }))
 app.get('/log', checkError((req, res) => {
   response(res, 200, logMessages)
+}))
+
+app.get('/logArrival', checkError((req, res) => {
+  response(res, 200, logArrivalMessages)
 }))
 app.post('/test', checkError((req, res) => {
   console.log('message arrived from: ', req.body )
