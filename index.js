@@ -25,6 +25,11 @@ let chatApps = new Map([
     "endpointPublic":"https://quiet-citadel-52217.herokuapp.com/publicChat",
     "endpointPrivate":"https://quiet-citadel-52217.herokuapp.com/privateChat",
     "endpointContacts":"https://quiet-citadel-52217.herokuapp.com/contacts"
+  }],
+  ['vue', {
+    "endpointPublic":"https://awebchat.herokuapp.com/api/public/send",
+    "endpointPrivate":"https://awebchat.herokuapp.com/api/private/send",
+    "endpointContacts":"https://awebchat.herokuapp.com/api/contacts"
   }]
 ])
 
